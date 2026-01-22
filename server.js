@@ -1,13 +1,13 @@
+require('dotenv').config(); // Load .env file
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose'); // 1. Import Mongoose
-require('dotenv').config(); // Load .env file
 const sfRoutes = require('./Routes/sfRoutes'); 
 
 const app = express(); 
 
 // 2. MongoDB Cloud Connection
-const MONGO_URI = process.env.MONGO_URI; 
+const MONGO_URI = "mongodb+srv://sai:sai@atlascluster.1usjo.mongodb.net/?appName=AtlasCluster"; 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB Atlas Cloud'))
     .catch(err => {
