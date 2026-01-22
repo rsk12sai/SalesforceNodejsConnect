@@ -10,7 +10,12 @@ const app = express();
 const MONGO_URI = process.env.MONGO_URI; 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB Atlas Cloud'))
-    .catch(err => console.error('❌ MongoDB Connection Error:', err));
+    .catch(err => {
+        console.error('❌ MongoDB Connection Error Details:');
+        console.error('Code:', err.code);
+        console.error('Hostname:', err.hostname);
+        console.error('Message:', err.message);
+    });
 
 const allowedOrigins = [
     'https://rsk7-dev-ed.lightning.force.com',
