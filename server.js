@@ -1,7 +1,16 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose'); // 1. Import Mongoose
+require('dotenv').config(); // Load .env file
 const sfRoutes = require('./Routes/sfRoutes'); 
+
 const app = express(); 
+
+// 2. MongoDB Cloud Connection
+const MONGO_URI = process.env.MONGO_URI; 
+mongoose.connect(MONGO_URI)
+    .then(() => console.log('✅ Connected to MongoDB Atlas Cloud'))
+    .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 const allowedOrigins = [
     'https://rsk7-dev-ed.lightning.force.com',
@@ -18,14 +27,12 @@ app.use(cors({
     }
 }));
 
-// 2. Middleware
 app.use(express.json());
 
 // 3. Mount Routes
 app.use('/api', sfRoutes);
 
-// 4. Start Server
-const PORT = process.env.PORT || 3000; // Render uses process.env.PORT
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });

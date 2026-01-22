@@ -7,7 +7,7 @@ const { protect } = require('../middleware/authMiddleware');
 // 2. IMPORT THE CONTROLLER (This is what was missing)
 const sfController = require('../controllers/sfController'); 
 const sfContact = require('../controllers/Contact'); 
-
+const userController = require('../controllers/userController');
 
 // 3. IMPORT THE OTHER CONTROLLERS IF NEEDED
 const { login } = require('../controllers/authController');
@@ -27,6 +27,7 @@ router.get('/getPosts', protect, weatherController.getMockPosts);
 //Post API 
 router.post('/createAccount', protect, sfController.createAccount);
 router.post('/createContact', protect, sfContact.createContact);
+router.post('/users/create', protect, userController.syncSalesforceUser);
 
 
 module.exports = router;
