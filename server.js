@@ -7,7 +7,7 @@ const sfRoutes = require('./Routes/sfRoutes');
 const app = express(); 
 
 // 2. MongoDB Cloud Connection
-const MONGO_URI = "mongodb+srv://sai:sai@atlascluster.1usjo.mongodb.net/?appName=AtlasCluster"; 
+const MONGO_URI = "mongodb+srv://sai:sai@atlascluster.1usjo.mongodb.net/?SalesforceSync?retryWrites=true&w=majority"; 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB Atlas Cloud'))
     .catch(err => {
