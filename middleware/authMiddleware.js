@@ -2,27 +2,28 @@ const jwt = require('jsonwebtoken');
 const logger = require('../utils/logger');
 
 const protect = (req, res, next) => {
-    let authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization;
 
     if (authHeader && authHeader.startsWith('Bearer')) {
         try {
-            // Get token from "Bearer <token>"
-            const token = authHeader.split(' ')[1];
+            // Split by space and filter out any empty strings or "Bearer" keywords
+            const parts = authHeader.split(' ');
+            const token = parts.find(p => p.startsWith('eyJ')); // JWTs always start with 'eyJ'
 
-            // Verify token - MUST MATCH YOUR LOGIN SECRET
+            if (!token) {
+                throw new Error('No valid JWT found in header');
+            }
+
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_secret_key');
-            
             req.user = decoded;
-            return next(); // Stop here and go to the controller
+            return next(); 
         } catch (error) {
-            logger.error('JWT Verification Failed: %s', error.message);
-            // Return here to stop execution
-            return res.status(401).json({ success: false, message: 'Not authorized, token failed' });
+            console.error('JWT Verification Failed:', error.message);
+            return res.status(401).json({ success: false, message: error.message });
         }
     }
 
-    // If we reach here, it means no "Bearer" header was present at all
-    return res.status(401).json({ success: false, message: 'Not authorized, no token' });
+    return res.status(401).json({ success: false, message: 'No Authorization Header' });
 };
 
 module.exports = { protect };
