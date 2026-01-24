@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose'); // 1. Import Mongoose
 const sfRoutes = require('./Routes/sfRoutes'); 
+const WorkProfileODataServer = require('./odata/WorkProfileOData'); 
 
 const app = express(); 
 
