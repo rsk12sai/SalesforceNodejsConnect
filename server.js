@@ -37,6 +37,9 @@ app.use(express.json());
 // 3. Mount Routes
 app.use('/api', sfRoutes);
 
+app.use('/odata', WorkProfileODataServer.create());
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
